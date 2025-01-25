@@ -1,10 +1,14 @@
 const mongoose = require("mongoose");
 const express = require("express");
-const axios = require("axios"); 
+const axios = require("axios");
 const cron = require("node-cron");
 require("dotenv").config();
 const app = express();
 const PORT = 3000;
+
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
 
 mongoose
   .connect(process.env.URI)
@@ -38,7 +42,7 @@ const weatherSchema = new mongoose.Schema({
 
 const Weather = mongoose.model("Weather", weatherSchema);
 
-const apiKey = process.env.API_KEY
+const apiKey = process.env.API_KEY;
 const apiUrl =
   "https://api.openweathermap.org/data/2.5/weather?&units=metric&q=";
 
@@ -108,9 +112,9 @@ cron.schedule("0 * * * *", () => {
   });
 });
 
- cities.forEach((city) => {
-    fetchWeatherData(city);
-  });
+cities.forEach((city) => {
+  fetchWeatherData(city);
+});
 app.get("/", (req, res) => {
   res.send("Weather data automation service running");
 });

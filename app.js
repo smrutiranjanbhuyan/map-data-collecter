@@ -4,7 +4,7 @@ const axios = require("axios");
 const cron = require("node-cron");
 require("dotenv").config();
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.get("/", (req, res) => {
   res.send("Hello World");
@@ -112,9 +112,7 @@ cron.schedule("0 * * * *", () => {
   });
 });
 
-cities.forEach((city) => {
-  fetchWeatherData(city);
-});
+
 app.get("/", (req, res) => {
   res.send("Weather data automation service running");
 });
